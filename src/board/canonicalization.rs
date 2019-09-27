@@ -57,7 +57,7 @@ impl Transformation {
     }
 
     pub(crate) fn random() -> Self {
-        use rand::{distributions::Distribution, Rng};
+        use rand::Rng;
         // SmallRng is a good 10% faster, but it uses XorShiftRng which can fail some statistical tests
         // There are some adaptions that fix this, but I don't know if Rust implements them.
         //let rng = &mut rand::rngs::SmallRng::from_rng(rand::thread_rng()).unwrap();
@@ -74,8 +74,7 @@ impl Transformation {
         }
         let transpose = rng.gen();
 
-        let range = rand::distributions::Range::from(0u8..6);
-        let mut perm = || Permutation3::new(range.sample(rng));
+        let mut perm = || Permutation3::new(rng.gen_range(0, 6));
 
         Transformation {
             transpose,

@@ -1,3 +1,4 @@
+use rand::seq::SliceRandom;
 use rand::Rng;
 
 use crate::bitset::Set;
@@ -266,7 +267,8 @@ impl SudokuGenerator {
         // not necessary, but ~15% faster
         let mut stack = Vec::with_capacity(N_CELLS);
         let mut perm = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        rand::thread_rng().shuffle(&mut perm);
+        let mut rng = rand::thread_rng();
+        perm.shuffle(&mut rng);
 
         stack.extend(
             (0..9)

@@ -1,4 +1,4 @@
-use rand::Rng;
+use rand::seq::SliceRandom;
 
 use crate::consts::*;
 use crate::generator::SudokuGenerator;
@@ -160,7 +160,8 @@ impl Sudoku {
             .iter_mut()
             .enumerate()
             .for_each(|(cell, place)| *place = cell);
-        rand::thread_rng().shuffle(&mut cell_order);
+        let mut rng = rand::thread_rng();
+        cell_order.shuffle(&mut rng);
 
         // remove cell content if possible without destroying uniqueness of solution
         const CUTOFF: usize = 20;
@@ -335,11 +336,10 @@ impl Sudoku {
             }
         }
 
-        let valid_ending = chars.get(81)
-            .map_or(true, |ch| match ch {
-                b'\t' | b' ' | b'\r' | b'\n' | b';' | b',' => true,
-                _ => false,
-            });
+        let valid_ending = chars.get(81).map_or(true, |ch| match ch {
+            b'\t' | b' ' | b'\r' | b'\n' | b';' | b',' => true,
+            _ => false,
+        });
 
         match valid_ending {
             true => Sudoku::from_bytes(grid),

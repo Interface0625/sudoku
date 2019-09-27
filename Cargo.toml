@@ -10,7 +10,7 @@ authors = ["Emerentius"]
 edition = "2018"
 
 [dependencies]
-rand = "0.5.5"
+rand = { version = "0.7", features = ["wasm-bindgen"] }
 serde = { version = "1.0.80", optional = true }
 crunchy = "0.2.1"
 
